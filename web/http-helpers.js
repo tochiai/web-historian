@@ -11,19 +11,21 @@ exports.headers = headers = {
   'Content-Type': "text/html"
 };
 
-exports.serveAssets = serveAssets = function(res, asset) {
+exports.serveAssets = serveAssets = function(res, asset, req) {
   // Write some code here that helps serve up your static files!
   // (Static files are things like html (yours or archived from others...), css, or anything that doesn't change often.)
+  var statusCode = 200;
+  if(req !== undefined){statusCode = 302};
   fs.readFile(__dirname + asset, function(err, contents) {
       if(err){
         console.log(err);
       } else {
-        sendResponse(res, 200, contents);
+        sendResponse(res, statusCode, contents);
       }
     });
 };
 
-exports.getHandler = function(req, res){
+exports.getHandler = getHandler = function(req, res){
   var path = url.parse(req.url).pathname;
   if(path === '/'){
     serveAssets(res, '/public/index.html');
@@ -31,6 +33,18 @@ exports.getHandler = function(req, res){
     archive.isUrlInList(path, res);
   }
 };
+
+exports.postHandler = postHandler = function(req, res){
+  var body = '';
+  req.on('data', function(data){
+    body += data.slice(4);
+    console.log(body);
+  });
+  req.on('end', function(){
+    archive.isUrlInList('/' + body, res, req);
+  });
+}
+
 exports.sendResponse = sendResponse = function(response, statusCode, contents){
   response.writeHead(statusCode, headers);
   response.end(contents);

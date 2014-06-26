@@ -1,2 +1,10 @@
 www.google.com
 arglebargle
+styles.css
+favicon.ico
+public/styles.css
+intl/en_ALL/images/srpr/logo1w.png
+images/srpr/nav_logo80.png
+xjs/_/js/hp/sb_he,pcc/rt=j/ver=2Pr7mrMaui0.en_US./d=1/sv=1/rs=AItRSTPGRgyRrtz6Oh8ITFsxshRnZQGQbw
+www.facebook.com
+www.example.com

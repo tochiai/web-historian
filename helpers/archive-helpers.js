@@ -40,7 +40,7 @@ exports.readListOfUrls = function(){
 
 };
 
-exports.isUrlInList = function(path, res){
+exports.isUrlInList = function(path, res, req){
   fs.readFile(__dirname + '/../archives/sites.txt', {encoding: 'utf-8'}, function (err, data) {
     if (err){
       throw err;
@@ -48,16 +48,14 @@ exports.isUrlInList = function(path, res){
       listArray = data.split('\n');
       var inList = false;
       for(var i=0; i<listArray.length; i++){
-        console.log('path: ' + path.slice(1));
-        console.log('list Array: ' + listArray[i]);
         if(path.slice(1) === listArray[i]){
-          isUrlArchived(path, res);
+          isUrlArchived(path, res, req);
           inList = true;
         }
       }
       if(!inList){
         addUrlToList(path);
-        httpHelpers.serveAssets(res, '/public/loading.html');
+        httpHelpers.serveAssets(res, '/public/loading.html', req);
       }
     }
   });
@@ -69,13 +67,13 @@ exports.addUrlToList = addUrlToList = function(path){
   });
 };
 
-exports.isUrlArchived = isUrlArchived = function(path, res){
+exports.isUrlArchived = isUrlArchived = function(path, res, req){
   fs.readdir(__dirname + '/../archives/sites', function(err, files){
     for(var i=0; i<files.length; i++){
       if(path.slice(1) === listArray[i]){
-        httpHelpers.serveAssets(res, '/../archives/sites' + path);
+        httpHelpers.serveAssets(res, '/../archives/sites' + path, req);
       } else {
-        httpHelpers.serveAssets(res, '/public/loading.html');
+        httpHelpers.serveAssets(res, '/public/loading.html', req);
       }
     }
   });

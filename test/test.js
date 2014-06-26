@@ -58,6 +58,7 @@ describe("Node Server Request Listener Function", function() {
 
     // Reset the test file and process request
     fs.writeFileSync(archive.paths.list, "");
+    console.log(archive.paths.list);
     handler.handleRequest(req, res);
 
     waitForThen(
