@@ -38,10 +38,9 @@ exports.postHandler = postHandler = function(req, res){
   var body = '';
   req.on('data', function(data){
     body += data.slice(4);
-    console.log(body);
   });
   req.on('end', function(){
-    archive.isUrlInList('/' + body, res, req);
+    archive.isUrlInList(body, res, req);
   });
 }
 
